@@ -26,8 +26,9 @@ function App() {
     );
   }
 
+  // Short sintax  to remove unecessary html tags in return  like div
   return (
-    <div>
+    <>
       <Header />
       <main>
         <section id="core-concepts">
@@ -69,7 +70,7 @@ function App() {
           {tabContent}
         </section>
       </main>
-    </div>
+    </>
   );
 }
 
