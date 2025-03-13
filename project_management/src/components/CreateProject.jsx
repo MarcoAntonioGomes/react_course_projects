@@ -1,27 +1,53 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-export default function CreateProject() {
+export default function CreateProject({
+  onAddProject,
+  onCreateProject,
+  onError,
+}) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [dueDate, setDueDate] = useState("");
-
-  const handleCancel = () => {
-    console.log("Form canceled");
-    setTitle("");
-    setDescription("");
-    setDueDate("");
-  };
+  const [mensagemErro, setMensagemErro] = useState("");
+  const handleCancel = () => {};
 
   const handleSave = (e) => {
-    e.preventDefault();
-    console.log("Form data:", { title, description, dueDate });
+    if (!title) {
+      setMensagemErro("Title is required");
+      onError();
+      return;
+    }
+
+    if (!description) {
+      setMensagemErro("Description is required");
+      onError();
+      return;
+    }
+
+    if (!dueDate) {
+      setMensagemErro("Due date is required");
+      onError();
+      return;
+    }
+
+    //onAddProject({ title, description, dueDate });
+    //onCreateProject();
   };
 
   return (
-    <form onSubmit={handleSave} className=" mt-48 w-full p-6  space-y-4">
+    <form className=" mt-48 w-full p-6  space-y-4">
       {/* Header with buttons */}
 
       <div className="w-full">
+        {mensagemErro && (
+          <div
+            className="bg-red-100 border mb-5 border-red-400 text-red-700 px-4 py-3 rounded relative"
+            role="alert"
+          >
+            <strong className="font-bold">Error!&nbsp;</strong>
+            <span className="block sm:inline">{mensagemErro}</span>
+          </div>
+        )}
         <div className=" ml-5 w-9/12 flex justify-end ">
           <button
             type="button"
@@ -31,7 +57,7 @@ export default function CreateProject() {
             Cancel
           </button>
           <button
-            type="submit"
+            onClick={handleSave}
             className="px-4 py-2 bg-black w-20 text-white rounded hover:bg-blue-700"
           >
             Save

@@ -1,6 +1,6 @@
-export default function Button({ label, icon, css, click }) {
+export default function Button({ label, icon, css, click, btnAlign }) {
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className={btnAlign}>
       <button onClick={click} className={`${css}`}>
         <span>{icon}</span>
         <span>{label}</span>
