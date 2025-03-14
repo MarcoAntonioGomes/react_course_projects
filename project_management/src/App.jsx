@@ -7,10 +7,11 @@ function App() {
   const [projects, setProjects] = useState([]);
   const [createProject, setCreateProject] = useState(false);
   const [selectedProject, setSelectedProject] = useState(null);
-  const [tasks, setTasks] = useState([]);
 
+  // Ao adicionar um projeto, inicializa o array de tasks
   function handleAddProject(project) {
-    setProjects([...projects, project]);
+    const newProject = { ...project, tasks: [] };
+    setProjects([...projects, newProject]);
   }
 
   const handleCreateProject = () => {
@@ -28,14 +29,50 @@ function App() {
     setSelectedProject(project);
   };
 
+  // Ao adicionar uma task, atualizamos o projeto correspondente
   const handleAddTask = (task) => {
-    setTasks([...tasks, task]);
+    if (!selectedProject) return;
+
+    const updatedProjects = projects.map((p) => {
+      if (p === selectedProject) {
+        // Adiciona a task ao array tasks do projeto
+        return { ...p, tasks: [...p.tasks, task] };
+      }
+      return p;
+    });
+
+    setProjects(updatedProjects);
+    // Atualiza o selectedProject para refletir a mudança
+    const updatedProject = updatedProjects.find(
+      (p) => p.title === selectedProject.title
+    );
+    console.log("updatedProject", updatedProject);
+    setSelectedProject(updatedProject);
   };
 
   const handleDelete = (project) => {
     setProjects(projects.filter((p) => p !== project));
     setSelectedProject(null);
     setCreateProject(false);
+  };
+
+  const handleClearTask = (index) => {
+    if (!selectedProject) return;
+
+    // Cria uma nova lista de tasks removendo a task no índice especificado
+    const updatedTasks = selectedProject.tasks.filter((_, i) => i !== index);
+
+    // Cria um novo objeto de projeto com as tasks atualizadas
+    const updatedProject = { ...selectedProject, tasks: updatedTasks };
+
+    // Atualiza o array de projetos substituindo o projeto selecionado pelo atualizado
+    const updatedProjects = projects.map((project) =>
+      project === selectedProject ? updatedProject : project
+    );
+
+    // Atualiza o estado com o novo array de projetos e o projeto selecionado
+    setProjects(updatedProjects);
+    setSelectedProject(updatedProject);
   };
 
   return (
@@ -57,10 +94,9 @@ function App() {
       {selectedProject && (
         <Task
           project={selectedProject}
-          tasks={tasks}
           handleDelete={handleDelete}
-          setTasks={setTasks}
           handleAddTask={handleAddTask}
+          handleClearTask={handleClearTask}
         />
       )}
     </div>

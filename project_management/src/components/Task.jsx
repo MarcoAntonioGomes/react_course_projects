@@ -2,10 +2,9 @@ import { useState } from "react";
 
 export default function Task({
   project,
-  tasks,
-  setTasks,
   handleAddTask,
   handleDelete,
+  handleClearTask, // Função para remover task do projeto (deve ser implementada no App)
 }) {
   const [newTask, setNewTask] = useState("");
 
@@ -17,7 +16,10 @@ export default function Task({
   };
 
   const onClearTask = (index) => {
-    setTasks(tasks.filter((_, i) => i !== index));
+    // Se a função handleClearTask for fornecida, chama-a para atualizar o estado do projeto
+    if (handleClearTask) {
+      handleClearTask(index);
+    }
   };
 
   const onDeleteClick = () => {
@@ -54,17 +56,18 @@ export default function Task({
         </div>
       </div>
       <div className="w-10/12 mt-5 bg-gray-200">
-        {tasks.map((task, index) => (
-          <div key={index} className="flex justify-between px-5 py-3">
-            <p>{task}</p>
-            <button
-              onClick={() => onClearTask(index)}
-              className="w-72 font-light text-lg  text-right pr-5 text-black h-9 ml-5  hover:text-neutral-400"
-            >
-              Clear
-            </button>
-          </div>
-        ))}
+        {project.tasks &&
+          project.tasks.map((task, index) => (
+            <div key={index} className="flex justify-between px-5 py-3">
+              <p>{task}</p>
+              <button
+                onClick={() => onClearTask(index)}
+                className="w-72 font-light text-lg text-right pr-5 text-black h-9 ml-5 hover:text-neutral-400"
+              >
+                Clear
+              </button>
+            </div>
+          ))}
       </div>
     </div>
   );
