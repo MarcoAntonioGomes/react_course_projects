@@ -1,6 +1,10 @@
 import Button from "./Button";
 
-export default function ProjectSideBar({ projects, onCreateProject }) {
+export default function ProjectSideBar({
+  projects,
+  onCreateProject,
+  onProjectClick,
+}) {
   function createBtnIcon() {
     return (
       <svg
@@ -31,9 +35,12 @@ export default function ProjectSideBar({ projects, onCreateProject }) {
       />
 
       <div>
-        {projects.map((project) => (
-          <div key={project.id} className="flex  justify-between px-5 py-3 ">
-            <button className="text-neutral-50 w-72  font-light text-lg  text-left pl-5  rounded h-9 ml-5 bg-zinc-900 hover:text-neutral-100">
+        {projects.map((project, index) => (
+          <div key={index} className="flex  justify-between px-5 py-3 ">
+            <button
+              onClick={() => onProjectClick(project)}
+              className="text-neutral-50 w-72  font-light text-lg  text-left pl-5  rounded h-9 ml-5 bg-zinc-900 hover:text-neutral-100"
+            >
               {project.title}
             </button>
           </div>
