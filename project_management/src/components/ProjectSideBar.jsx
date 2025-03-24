@@ -22,14 +22,14 @@ export default function ProjectSideBar({
   }
 
   return (
-    <div className="w-5/12 mt-10 h-screen rounded-tr-3xl bg-black">
-      <h2 className="capitalize text-slate-300 ml-10 pt-20 font-bold text-2xl">
+    <div className="w-5/12 mt-10 h-screen rounded-tr-3xl bg-black md:w72">
+      <h2 className="capitalize md:text-xl text-slate-300 ml-10 pt-20 font-bold text-2xl">
         YOUR PROJECTS
       </h2>
       <Button
         label="Add Project"
         btnAlign="flex flex-col  ml-10 "
-        css=" px-4 py-2 mb-10  space-x-2 flex items-center mt-20 w-40 h-12 rounded text-lg text-neutral-500 bg-neutral-700"
+        css=" px-4 py-2 mb-10  space-x-2 flex items-center mt-20 w-40 h-12 rounded text-lg text-neutral-500 bg-neutral-700 hover:bg-stone-600 hover:text-stone-100"
         icon={createBtnIcon()}
         click={onCreateProject}
       />

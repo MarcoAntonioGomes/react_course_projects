@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./Input";
 
 export default function CreateProject({
   onAddProject,
@@ -66,13 +67,8 @@ export default function CreateProject({
 
         {/* Title Field */}
         <div>
-          <label
-            htmlFor="title"
-            className="block mb-1 ml-5 font-medium text-gray-700"
-          >
-            TITLE
-          </label>
-          <input
+          <Input
+            label={" TITLE"}
             id="title"
             type="text"
             value={title}
@@ -81,37 +77,28 @@ export default function CreateProject({
           />
         </div>
 
-        {/* Description Field */}
         <div className="mt-5">
-          <label
-            htmlFor="description"
-            className="block mb-1 ml-5 font-medium text-gray-700"
-          >
-            DESCRIPTION
-          </label>
-          <textarea
+          <Input
+            label={"Description"}
             id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            type="text"
+            value={title}
             rows={3}
-            className="w-9/12  ml-5  bg-neutral-700 bg-opacity-20 border-b-2 border-b-gray-400 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
+            textArea={true}
+            onChange={(e) => setDescription(e.target.value)}
+            className="w-9/12  bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
           />
         </div>
 
         {/* Due Date Field */}
         <div className="mt-5">
-          <label
-            htmlFor="dueDate"
-            className="block mb-1 ml-5 font-medium text-gray-700"
-          >
-            DUE DATE
-          </label>
-          <input
+          <Input
+            label={"due Date"}
             id="dueDate"
             type="text"
             value={dueDate}
-            onChange={(e) => setDueDate(e.target.value)}
             placeholder="dd.mm.yyyy"
+            onChange={(e) => setDueDate(e.target.value)}
             className="w-9/12  bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
           />
         </div>
