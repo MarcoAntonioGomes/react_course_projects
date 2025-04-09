@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import Input from "./Input";
 
 export default function CreateProject({
@@ -6,13 +6,19 @@ export default function CreateProject({
   onCreateProject,
   onError,
 }) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const titleRef = useRef();
+  const descriptionRef = useRef();
+  const dueDateRef = useRef();
   const [mensagemErro, setMensagemErro] = useState("");
+
   const handleCancel = () => {};
 
   const handleSave = (e) => {
+    e.preventDefault();
+    const title = titleRef.current.value;
+    const description = descriptionRef.current.value;
+    const dueDate = dueDateRef.current.value;
+
     if (!title) {
       setMensagemErro("Title is required");
       onError();
@@ -31,14 +37,12 @@ export default function CreateProject({
       return;
     }
 
-    //onAddProject({ title, description, dueDate });
-    //onCreateProject();
+    onAddProject({ title, description, dueDate });
+    onCreateProject();
   };
 
   return (
-    <form className=" mt-48 w-full p-6  space-y-4">
-      {/* Header with buttons */}
-
+    <form className="mt-48 w-full p-6 space-y-4" onSubmit={handleSave}>
       <div className="w-full">
         {mensagemErro && (
           <div
@@ -49,7 +53,7 @@ export default function CreateProject({
             <span className="block sm:inline">{mensagemErro}</span>
           </div>
         )}
-        <div className=" ml-5 w-9/12 flex justify-end ">
+        <div className="ml-5 w-9/12 flex justify-end">
           <button
             type="button"
             onClick={handleCancel}
@@ -58,7 +62,7 @@ export default function CreateProject({
             Cancel
           </button>
           <button
-            onClick={handleSave}
+            type="submit"
             className="px-4 py-2 bg-black w-20 text-white rounded hover:bg-blue-700"
           >
             Save
@@ -68,38 +72,35 @@ export default function CreateProject({
         {/* Title Field */}
         <div>
           <Input
-            label={" TITLE"}
+            label="TITLE"
             id="title"
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            className="w-9/12  bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
+            ref={titleRef}
+            className="w-9/12 bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
           />
         </div>
 
         <div className="mt-5">
           <Input
-            label={"Description"}
+            label="Description"
             id="description"
             type="text"
-            value={title}
+            ref={descriptionRef}
             rows={3}
             textArea={true}
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-9/12  bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
+            className="w-9/12 bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
           />
         </div>
 
         {/* Due Date Field */}
         <div className="mt-5">
           <Input
-            label={"due Date"}
+            label="Due Date"
             id="dueDate"
             type="text"
-            value={dueDate}
+            ref={dueDateRef}
             placeholder="dd.mm.yyyy"
-            onChange={(e) => setDueDate(e.target.value)}
-            className="w-9/12  bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
+            className="w-9/12 bg-neutral-700 bg-opacity-20 ml-5 border-b-2 border-b-gray-400 px-3 py-2 focus:outline-none focus:ring focus:ring-zinc-500"
           />
         </div>
       </div>

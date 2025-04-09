@@ -4,7 +4,7 @@ export default function NoProjectSelected({ onStartCreateProject }) {
   return (
     <div className="flex w-screen flex-col items-center justify-center h-screen">
       <img
-        className="w-20"
+        className="w-16 h-16 object-contain mx-auto"
         src="src/assets/no-projects.png"
         alt="No projects"
       />
