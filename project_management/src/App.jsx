@@ -46,7 +46,7 @@ function App() {
     const updatedProject = updatedProjects.find(
       (p) => p.title === selectedProject.title
     );
-    console.log("updatedProject", updatedProject);
+
     setSelectedProject(updatedProject);
   };
 
