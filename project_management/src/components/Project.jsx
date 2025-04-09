@@ -143,7 +143,7 @@ export default function Project({ addProject, startCreateProject, onCancel }) {
             </label>
             <input
               id="dueDate"
-              type="text"
+              type="date"
               value={formData.dueDate}
               onChange={(e) =>
                 setFormData((prev) => ({ ...prev, dueDate: e.target.value }))
