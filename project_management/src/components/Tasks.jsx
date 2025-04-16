@@ -1,43 +1,17 @@
 import { useState } from "react";
 
-export default function Task({
-  project,
-  handleAddTask,
-  handleDelete,
-  handleClearTask, // Função para remover task do projeto (deve ser implementada no App)
-}) {
+export default function Tasks({ tasks, onAddTask, onClearTask }) {
   const [newTask, setNewTask] = useState("");
 
-  const onAddTask = () => {
+  const handleAddTask = () => {
     if (newTask.trim() !== "") {
-      handleAddTask(newTask);
+      onAddTask(newTask);
       setNewTask("");
     }
   };
 
-  const onClearTask = (index) => {
-    // Se a função handleClearTask for fornecida, chama-a para atualizar o estado do projeto
-    if (handleClearTask) {
-      handleClearTask(index);
-    }
-  };
-
-  const onDeleteClick = () => {
-    handleDelete(project);
-  };
-
   return (
-    <div className="mt-20 w-full ml-10">
-      <div className="flex w-10/12 justify-between">
-        <h2 className="text-4xl font-bold">{project.title}</h2>
-        <button onClick={onDeleteClick} className="text-right">
-          Delete
-        </button>
-      </div>
-
-      <p className="mt-5">{project.dueDate}</p>
-      <p className="mt-5">{project.description}</p>
-      <hr className="my-4 w-10/12 border-t-4 border-gray-300" />
+    <div>
       <h2 className="text-3xl font-bold">Tasks</h2>
       <div className="flex items-center mt-5">
         <div className="w-6/12">
@@ -50,14 +24,14 @@ export default function Task({
           />
         </div>
         <div>
-          <button onClick={onAddTask} className="ml-5">
+          <button onClick={handleAddTask} className="ml-5">
             Add Task
           </button>
         </div>
       </div>
       <div className="w-10/12 mt-5 bg-gray-200">
-        {project.tasks &&
-          project.tasks.map((task, index) => (
+        {tasks &&
+          tasks.map((task, index) => (
             <div key={index} className="flex justify-between px-5 py-3">
               <p>{task}</p>
               <button

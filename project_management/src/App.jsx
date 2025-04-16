@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import Project from "./components/Project";
 import ProjectSideBar from "./components/ProjectSideBar";
-import Task from "./components/Task";
+import SelectedProject from "./components/SelectedProject";
 
 function App() {
   const [projects, setProjects] = useState([]);
@@ -92,7 +92,7 @@ function App() {
       )}
 
       {selectedProject && (
-        <Task
+        <SelectedProject
           project={selectedProject}
           handleDelete={handleDelete}
           handleAddTask={handleAddTask}
