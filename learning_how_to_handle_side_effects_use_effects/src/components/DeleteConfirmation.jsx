@@ -6,7 +6,7 @@ export default function DeleteConfirmation({ onConfirm, onCancel }) {
       onConfirm();
     }, 3000);
     return () => clearTimeout(timer);
-  }, []);
+  }, [onConfirm]);
 
   return (
     <div id="delete-confirmation">
