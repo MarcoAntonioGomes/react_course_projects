@@ -14,7 +14,7 @@ const Modal = forwardRef(function Modal({ children, open, onClose }, ref) {
 
   return createPortal(
     <dialog className="modal" ref={dialog} onClose={onClose}>
-      {children}
+      {open ? children : null}
     </dialog>,
     document.getElementById("modal")
   );
