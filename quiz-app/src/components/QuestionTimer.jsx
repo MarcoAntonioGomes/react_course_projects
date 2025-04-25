@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 //useEffect is good for side effects, to prevent loops, cleanup, etc.
 
-export default function QuestionTimer({ timeout, onTimesout }) {
+export default function QuestionTimer({ timeout, onTimesout, mode }) {
   const [remainingTime, setRemainingTime] = useState(timeout);
 
   // to reset the timer when the question changes
@@ -21,5 +21,12 @@ export default function QuestionTimer({ timeout, onTimesout }) {
     return () => clearInterval(interval); // to clear the interval when the component unmounts
   }, []);
 
-  return <progress id="question-time" value={remainingTime} max={timeout} />;
+  return (
+    <progress
+      id="question-time"
+      value={remainingTime}
+      max={timeout}
+      className={mode}
+    />
+  );
 }
