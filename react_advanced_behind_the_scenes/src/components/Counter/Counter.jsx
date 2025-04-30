@@ -22,6 +22,8 @@ function isPrime(number) {
 
   return true;
 }
+
+// memo is used to prevent re-rendering the component when the props are the same
 const Counter = memo(function Counter({ initialCount }) {
   log("<Counter /> rendered", 1);
   const initialCountIsPrime = isPrime(initialCount);
