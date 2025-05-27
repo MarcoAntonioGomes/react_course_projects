@@ -1,57 +1,36 @@
-import { useState } from "react";
 import Input from "./Input";
+import { isEmail, isNotEmpty, hasMinLength } from "../util/validation.js";
+import { useInput } from "../hooks/useInput.js";
 
 export default function Login() {
   // const [enteredEmail, setEnteredEmail] = useState("");
   // const [enteredPassword, setEnteredPassword] = useState("");
 
-  const [enteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
-  });
+  const {
+    value: emailValue,
+    handleInputChange: handleEmailChange,
+    handleInputBlur: handleEmailBlur,
+    hasError: emailHasError,
+  } = useInput("", (value) => isEmail(value) && isNotEmpty(value));
 
-  const [didEdit, setDidEdit] = useState({
-    email: false,
-    password: false,
-  });
-
-  const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
-  const passwordIsInvalid =
-    didEdit.password && enteredValues.password.trim().length < 6;
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputBlur: handlePasswordBlur,
+    hasError: passwordHasError,
+  } = useInput("", (value) => hasMinLength(value, 6));
 
   //for keystrokes validation use useState to control the input fields
   function handleSubmit(event) {
     event.preventDefault();
+
+    if (emailHasError || passwordHasError) {
+      return;
+    }
+
     const formData = new FormData(event.target);
     const data = Object.fromEntries(formData);
     console.log(data);
-  }
-
-  // function handleEmailChange(event) {
-  //   setEnteredEmail(event.target.value);
-  // }
-
-  // function handlePasswordChange(event) {
-  //   setEnteredPassword(event.target.value);
-  // }
-
-  function handleInputChange(identifier, event) {
-    setEnteredValues({
-      ...enteredValues,
-      [identifier]: event.target.value,
-    });
-
-    setDidEdit((prev) => ({
-      ...prev,
-      [identifier]: false,
-    }));
-  }
-
-  function handleInputBlur(identifier) {
-    setDidEdit((prev) => ({
-      ...prev,
-      [identifier]: true,
-    }));
   }
 
   return (
@@ -64,10 +43,10 @@ export default function Login() {
           id="email"
           type="email"
           name="email"
-          error={emailIsInvalid && "Please enter a valid email address"}
-          value={enteredValues.email}
-          onBlur={() => handleInputBlur("email")}
-          onChange={(event) => handleInputChange("email", event)}
+          error={emailHasError && "Please enter a valid email address"}
+          value={emailValue}
+          onBlur={handleEmailBlur}
+          onChange={handleEmailChange}
         />
 
         <Input
@@ -75,11 +54,11 @@ export default function Login() {
           id="password"
           type="password"
           name="password"
-          value={enteredValues.password}
-          onBlur={() => handleInputBlur("password")}
-          onChange={(event) => handleInputChange("password", event)}
+          value={passwordValue}
+          onBlur={handlePasswordBlur}
+          onChange={handlePasswordChange}
           error={
-            passwordIsInvalid && "Password must be at least 6 characters long"
+            passwordHasError && "Password must be at least 6 characters long"
           }
         />
       </div>
