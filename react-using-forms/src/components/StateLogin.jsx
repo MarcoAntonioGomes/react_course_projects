@@ -1,4 +1,5 @@
 import { useState } from "react";
+import Input from "./Input";
 
 export default function Login() {
   // const [enteredEmail, setEnteredEmail] = useState("");
@@ -15,6 +16,8 @@ export default function Login() {
   });
 
   const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
+  const passwordIsInvalid =
+    didEdit.password && enteredValues.password.trim().length < 6;
 
   //for keystrokes validation use useState to control the input fields
   function handleSubmit(event) {
@@ -56,32 +59,29 @@ export default function Login() {
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            value={enteredValues.email}
-            type="email"
-            onBlur={() => handleInputBlur("email")}
-            name="email"
-            onChange={(event) => handleInputChange("email", event)}
-          />
-          <div className="control-error">
-            {emailIsInvalid && "Please enter a valid email address"}
-          </div>
-        </div>
+        <Input
+          label="Email"
+          id="email"
+          type="email"
+          name="email"
+          error={emailIsInvalid && "Please enter a valid email address"}
+          value={enteredValues.email}
+          onBlur={() => handleInputBlur("email")}
+          onChange={(event) => handleInputChange("email", event)}
+        />
 
-        <div className="control no-margin">
-          <label htmlFor="password">Password</label>
-          <input
-            id="password"
-            type="password"
-            name="password"
-            value={enteredValues.password}
-            onBlur={() => handleInputBlur("password")}
-            onChange={(event) => handleInputChange("password", event)}
-          />
-        </div>
+        <Input
+          label="Password"
+          id="password"
+          type="password"
+          name="password"
+          value={enteredValues.password}
+          onBlur={() => handleInputBlur("password")}
+          onChange={(event) => handleInputChange("password", event)}
+          error={
+            passwordIsInvalid && "Password must be at least 6 characters long"
+          }
+        />
       </div>
 
       <p className="form-actions">
